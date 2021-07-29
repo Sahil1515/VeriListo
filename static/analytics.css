@@ -1,0 +1,47 @@
+@media screen and (max-width:600px) {
+    .head-text {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width:600px) {
+    .head-text {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:767px) {
+    #toggle-btns {
+        padding-top: 7%;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .head-text-class {
+        padding-top: 7%;
+    }
+}
+
+@media screen and (min-width:600px) {
+    #total_habit_tag {
+        font-size: 28px;
+    }
+}
+
+@media screen and (max-width:600px) {
+    #total_habit_tag {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width:600px) {
+    .li-item {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .li-item {
+        font-size: 13px;
+    }
+}

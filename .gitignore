@@ -1,3 +1,19 @@
+
+#Custom
+
+file.json
+.history
+.vscode
+
+*.cpp
+
+.env
+temp.py
+check
+file
+temp2.py
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

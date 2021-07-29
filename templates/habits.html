@@ -1,0 +1,180 @@
+{% extends 'base.html' %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{%static 'habits.css'%}">
+
+    <title>Document</title>
+
+    <!-- <script src="{%static 'habits.js'%}"></script>
+     -->
+
+    <script>
+        $(document).ready(function() {
+            $("#habit_delete_alert").hide()
+
+            function sleep(milliseconds) {
+                var start = new Date().getTime();
+                for (var i = 0; i < 1e7; i++) {
+                    if ((new Date().getTime() - start) > milliseconds) {
+                        break;
+                    }
+                }
+            }
+
+
+
+            window.onload = $(this).parent('div').find('input').val("")
+
+            $(".habit_day_inc_btn").click(function() {
+
+                habit_name = $(this).attr('name')
+
+                let name = $(this).attr('name')
+                let nameofobject = "[name=" + "'" + name + "'" + "]"
+                nameofobject = "span" + nameofobject
+
+                let count = parseInt($(this).parent('div').parent('div').find(nameofobject).html())
+                count = count + 1
+                if (count == 25) {
+                    $(this).parent('div').parent('div').parent('div').remove()
+                        // show alert
+                    $("#habit_delete_alert").fadeIn(1000)
+                    $("#habit_delete_alert").fadeOut(2000)
+
+                }
+                $(this).parent('div').parent('div').find(nameofobject).html(count)
+
+                $(this).attr("disabled", true);
+
+                $.ajax({
+                    'type': "POST",
+                    'url': "habit_days_completed_inc",
+                    "data": {
+                        "habit_name": habit_name,
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function(data) {
+                        // alert("Hello Ajax")
+                        console.log("Hello Ajax")
+
+                    },
+                    error: function(data) {}
+
+                })
+            })
+
+
+
+            // $("#add_btn").click(function() {
+
+            //     habit_name = $(this).parent('div').find('input').val()
+
+            //     $.ajax({
+            //         'type': "POST",
+            //         'url': "habits_ajax",
+            //         'datatype': 'json',
+            //         "data": {
+            //             "habit_name": habit_name,
+            //             "csrfmiddlewaretoken": "{{ csrf_token }}"
+            //         },
+            //         success: function(data) {
+            //             // alert("Hello Ajax")
+            //             alert(typeof(data))
+
+            //             for (const ele in data) {
+            //                 if (ele == 'habits_data_items') {
+            //                     ele = JSON.parse(ele)
+            //                     alert(typeof(ele))
+            //                     alert(ele['items'])
+            //                 }
+            //             }
+
+
+            //             alert(data)
+
+            //         },
+            //         error: function(data) {}
+
+            //     })
+            // })
+
+        })
+    </script>
+    {% endblock %}
+
+</head>
+
+{% block content%}
+<div style="padding-top: 3%; padding-left: 19%;">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div id="add" class="container custom-scrollbar">
+            <input type="text" id="input" placeholder="Add to list..." value="" name='habit_name'>
+            <button class="btn btn-primary" type="submit" id="add_btn">Add item</button>
+        </div>
+    </form>
+</div>
+
+<div class="container" id="habit_delete_alert">
+    <h2 class="text-success fade-in" style="text-align: center;">Habit added to completed list!</h2>
+</div>
+<div class="container ">
+
+    <div class=" d-flex flex-wrap justify-content-center ">
+
+        {% for data in habits_data_items %}
+
+        <div class="card  text-light  bg-primary habit-div" style="width: 23rem; height: 15em;  margin: 5%; margin-top: 50px;   box-shadow: 1px 2px white;">
+
+            <div class="border-bottom" style="text-align: center;">
+                <h2>{{ data.habit_name }}</h2>
+            </div>
+
+            <div class="card-body ">
+
+                {% if data.done_today%}
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-success habit_day_inc_btn" disabled name="{{ data.habit_name }}">Mark as
+                        done</button>
+                </div>
+                {% else %}
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-success habit_day_inc_btn" name="{{ data.habit_name }}">Mark as
+                        done</button>
+                </div>
+                {% endif %}
+
+
+                <div class="d-flex justify-content-center">
+                    <h3>Day <span name="{{ data.habit_name }}">{{ data.days_completed }}</span>/30</h3>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div id="donut_single" style="width: 150px; height: 120px; margin-top: -13px;"></div>
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,45 @@
+ {% extends 'base.html'%} {% load static %} {% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'index.css' %}" />
+
+    <title>Document</title>
+    <script src="{%static 'index.js' %}"></script>
+
+
+    {% endblock %}
+</head>
+
+
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div id="add" class="container custom-scrollbar">
+        <input type="text" id="input" placeholder="Add to list..." name='item'>
+        <button class="btn btn-primary" type="submit" id="add_btn">Add item</button>
+    </div>
+</form>
+
+<div id="main_div" class=" row d-flex justify-content-center">
+    <div class=" row container ">
+        <ul id="myUL" style="width: 100%;">
+            {%for ele in data%}
+            <div class="col-12 justify-content-center  align-content-center">
+                <li id="li_items" class="cross li_item {{ele.class_name}}"> {{ ele.tag }}</li>
+            </div>
+            {%endfor%}
+        </ul>
+    </div>
+</div>
+{% endblock %}

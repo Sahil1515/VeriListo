@@ -1,0 +1,53 @@
+
+
+
+  .card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0, 0.7);
+    border-radius: 10px;
+}
+
+svg circle {
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: animate 8s linear infinite;
+    /* transform: translate(-50%, -50%) rotate(-90deg); */
+}
+
+
+
+
+li {
+    font-size: 2vw;
+}
+
+
+@media screen and (min-width: 600px) {
+    li {
+        font-size: 20px;
+    }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+    li {
+        font-size: 15px;
+    }
+}
+
+/* Top text */
+@media screen and (min-width: 600px) {
+    #top_text {
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #top_text {
+        font-size: 30px;
+    }
+}
+
+a.nav-link {
+    color: white;
+}
+

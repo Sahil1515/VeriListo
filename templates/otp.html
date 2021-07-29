@@ -1,0 +1,51 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Hello, world!</title>
+
+</head>
+
+<body>
+
+    <div style="margin-top: 10%;">
+        <div class="container" style="text-align:center">
+            <h2><b>Please enter the OTP to varify your account</b></h2>
+            <div class="container">
+                <p>A One-Time-Password has been sent to : {{email}}</p>
+            </div>
+
+            <form action="" method="POST">
+                {%csrf_token%}
+                <div class="container">
+                    <input type="text" id='otp' name='otp'>
+                </div>
+                <div class="container">
+                    {% if status == False %}
+                    <p class="text-danger"> {{message}}</p>
+                    {%endif%}
+                </div>
+
+                <input type="hidden" id='otp_hidden' value="">
+
+                <button class="btn btn-primary m-3" type='submit' id="btn_validate">Validate</button>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

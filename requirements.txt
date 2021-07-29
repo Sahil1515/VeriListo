@@ -1,0 +1,5 @@
+Django==3.2
+Flask==1.1.2
+firebase_admin==4.5.3
+django_heroku==0.3.1
+gunicorn==20.1.0

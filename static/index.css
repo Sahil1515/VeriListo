@@ -1,0 +1,146 @@
+#parent {
+    /* height: 400px; */
+    /* background: blueviolet; */
+    background: linear-gradient(to bottom, #1c155a 50%, #ff99cc 50%);
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 3%;
+    margin-bottom: 10%;
+    /* height: 1500px; */
+    max-height: 640px;
+    /* max-height: 60%; */
+    /* overflow-y: auto; */
+    display: block;
+}
+
+.li_item {
+    font-size: 2vw;
+}
+
+@media screen and (min-width: 600px) {
+    .li_item {
+        font-size: 20px;
+    }
+}
+
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+
+@media screen and (max-width: 600px) {
+    .li_item {
+        font-size: 15px;
+    }
+}
+
+
+/* Top text */
+
+@media screen and (min-width: 600px) {
+    #top_text {
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #top_text {
+        font-size: 30px;
+    }
+}
+
+a.nav-link {
+    color: white;
+}
+
+#add {
+    /* background-color: violet; */
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.li_item {
+    color: black;
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 8px;
+    /* background: #eee; */
+    /* font-size: 1vw; */
+    transition: 0s;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 5px;
+    margin-left: 20px;
+    width: 92%;
+    display: inline-block;
+    border-radius: 30px;
+}
+
+
+/* ul li:nth-child(odd) {
+    background: #fcfbfb;
+} */
+
+
+/* ul li:hover {
+    background: rgb(168, 168, 255);
+    opacity: 1;
+} */
+
+.unchecked {
+    color: black;
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 8px;
+    background: #eee;
+    font-size: 18px;
+    transition: 0s;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 5px;
+    margin-left: 20px;
+    width: 92%;
+    display: inline-block;
+    border-radius: 30px;
+}
+
+
+/* .unchecked:hover {
+    background: rgb(238, 233, 233);
+} */
+
+.cross::after {
+    float: right;
+    content: '\2716';
+    font-size: 20px;
+    color: black;
+}
+
+@media screen and (max-width:600px) {
+    .cross::after {
+        font-size: 10px;
+        color: black;
+    }
+}
+
+li.checked {
+    background: #03C858;
+    color: white;
+    text-decoration: line-through;
+}

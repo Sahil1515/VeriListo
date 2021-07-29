@@ -1,0 +1,1 @@
+web gunicorn VeriListo.wsgi:application --log-file -

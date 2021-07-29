@@ -1,0 +1,120 @@
+{% extends 'base.html' %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{%static 'habits.css'%}">
+
+    <title>Document</title>
+
+
+    <script>
+        $(document).ready(function() {
+            // $('#my_image').hide()
+
+            function format(command, value) {
+                document.execCommand(command, false, value);
+            }
+
+            $('.editor').click(function() {
+                let font_size = $('#quantity').val()
+                    // alert(font_size)
+                document.execCommand("fontSize", false, font_size);
+
+            })
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // window.addEventListener('paste', ... or
+            document.onpaste = function(event) {
+                alert("Hello")
+                    // use event.originalEvent.clipboard for newer chrome versions
+                var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+                console.log(JSON.stringify(items)); // will give you the mime types
+                // find pasted image among pasted items
+                var blob = null;
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf("image") === 0) {
+                        alert("Hi")
+                        blob = items[i].getAsFile();
+                    }
+                }
+                // load image if there is a pasted image
+                if (blob !== null) {
+                    alert("Hey")
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        alert("Holla")
+                        console.log(event.target.result); // data url!
+                        alert(event.target.result)
+                        document.getElementById("my_image").src = event.target.result;
+                    };
+                    reader.readAsDataURL(blob);
+                }
+
+
+            }
+
+
+        })
+    </script>
+    <style>
+        .editor {
+            border: solid 1px #ccc;
+            padding: 20px;
+            min-height: 200px;
+        }
+        
+        .sample-toolbar {
+            border: solid 1px #ddd;
+            background: #f4f4f4;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        
+        .sample-toolbar>span {
+            cursor: pointer;
+        }
+        
+        .sample-toolbar>span:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"> {% endblock %}
+
+</head>
+
+{% block content %}
+
+<!-- <div class="container bg-light m-5" style="height: 100%; width: 100%;">
+    <img id='my_image' src="first.png" alt="">
+</div> -->
+
+<!-- <div class="sample-toobar  container justify-content-center align-content-center" style="height:40px; margin-top: 4%; background-color:ivory; padding-top: 8px;"> -->
+<!-- <a href="javascript:void(0)" data-toggle="tooltip" title="Ctrl+B" onclick="format('bold')"> <span class="fa fa-bold fa-fw "> </span></a> -->
+<!-- <a href="javascript:void(0)" data-toggle="tooltip" title="Ctrl+I" onclick="format('italic')"> <span class="fa fa-italic fa-fw "> </span></a> -->
+<!-- <a href="javascript:void(0)" data-toggle="tooltip" title="List"> <span class="fa fa-list fa-fw "> </span></a> -->
+<!-- <button class="btn-dark" style="floatright;"> Theme</button> -->
+<!-- <span> <input class="bg-dark text-light" type="number" value="5" id="quantity" name="quantity" min="1" max="7" style="padding: 0%; padding-left: 3%; width: 100px;"></span> -->
+<!-- </div> -->
+
+<div class="container"> <input type="text" style="margin: 4%;" placeholder="Enter topic name"></div>
+<div class="editor bg-light container " id="sampleeditor" style="height:100%; margin-top: 2%; padding-top: 10px; overflow-y: scroll;" contenteditable="true"></div>
+
+<div class="container"> <button style="float: right; margin-top: 5px;" class="btn btn-success">Save</button> </div>
+
+{% endblock %}

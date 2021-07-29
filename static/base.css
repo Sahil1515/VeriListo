@@ -1,0 +1,195 @@
+body,
+html {
+    /* background-image: url("./cool-background.png"); */
+    height: 100%;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.8em;
+    color: #666;
+    /* overflow-y: hidden; */
+    /* overflow-wrap: break-word; */
+    overflow-x: hidden;
+}
+
+.gradient-custom-navbar {
+    /* fallback for old browsers */
+    background: #4facfe;
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to top, rgba(79, 172, 254, 0.7), rgba(0, 242, 254, 0.7));
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to top, rgba(79, 172, 254, 0.7), rgba(0, 242, 254, 0.7))
+}
+
+#top_text {
+    color: white;
+    text-shadow: 3px 3px black;
+    padding-top: 10px;
+    margin-right: 20px;
+    padding-right: 5vw;
+}
+
+#top_text:hover {
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+}
+
+li {
+    font-size: 2vw;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+@media screen and (min-width: 600px) {
+    li {
+        font-size: 20px;
+    }
+}
+
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+
+@media screen and (max-width: 600px) {
+    li {
+        font-size: 15px;
+    }
+}
+
+
+/* Top text */
+
+@media screen and (min-width: 600px) {
+    #top_text {
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #top_text {
+        font-size: 30px;
+    }
+}
+
+a.nav-link {
+    color: white;
+}
+
+#input {
+    /* background-color: white; */
+    height: 45px;
+    width: 70%;
+    opacity: 0.7;
+    color: solid black;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 20px;
+    outline: none;
+    border-width: 3px;
+    border-color: black;
+}
+
+input {
+    caret-color: black;
+}
+
+#input:hover {
+    opacity: 1;
+    transform: scale(1.03);
+    transition: 0.3s;
+}
+
+#add_btn {
+    padding: 5px;
+    margin-left: 10px;
+    height: 45px;
+    width: 100px;
+    border-radius: 30px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+}
+
+#add_btn:hover {
+    background: blueviolet;
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+input {
+    height: 28px;
+    font-size: 10px;
+    padding: 20px 5px;
+}
+
+@media screen and (max-width: 600px) {
+    #add_btn {
+        font-size: 13px;
+    }
+    #input {
+        font-size: 13px;
+    }
+    #li_items {
+        font-size: 13px;
+    }
+}
+
+.nav-item {
+    padding: 2px;
+}
+
+.nav-item :hover {
+    background-color: lightblue;
+    color: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+    height: 200px;
+}
+
+@media screen and (max-width:600px) {
+     ::-webkit-scrollbar {
+        width: 0px;
+    }
+}
