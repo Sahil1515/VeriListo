@@ -18,7 +18,18 @@ from firebase_admin import firestore
 
 
 if not firebase_admin._apps:
-    cred = credentials.Certificate('./file.json')
+    cred = credentials.Certificate(
+        os.environ.get("TYPE"),
+        os.environ.get("PROJECT_ID"),
+        os.environ.get("PRIVATE_KEY_ID"),
+        os.environ.get("PRIVATE_KEY"),
+        os.environ.get("CLIENT_EMAIL"),
+        os.environ.get("CLIENT_ID"),
+        os.environ.get("AUTH_URI"),
+        os.environ.get("TOKEN_URI"),
+        os.environ.get("AUTH_PROVIDER_X509_CERT_URL"),
+        os.environ.get("CLIENT_X509_CERT_URL")
+    )
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()

@@ -19,11 +19,24 @@ import environ
 
 from firebase_admin import firestore
 from firebase_admin import credentials
+import firebase_admin
 
 
-
-cred = credentials.Certificate('./file.json')
-
+if not firebase_admin._apps:
+    cred = credentials.Certificate(
+        os.environ.get("TYPE"),
+        os.environ.get("PROJECT_ID"),
+        os.environ.get("PRIVATE_KEY_ID"),
+        os.environ.get("PRIVATE_KEY"),
+        os.environ.get("CLIENT_EMAIL"),
+        os.environ.get("CLIENT_ID"),
+        os.environ.get("AUTH_URI"),
+        os.environ.get("TOKEN_URI"),
+        os.environ.get("AUTH_PROVIDER_X509_CERT_URL"),
+        os.environ.get("CLIENT_X509_CERT_URL")
+    )
+    firebase_admin.initialize_app(cred)
+    
 # firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -52,82 +65,81 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 authe = firebase.auth()
 
 
-
-def SignUp(request):  
-    form=forms.signupPage()
-    context={'form':form,}
-    return render(request, 'signup.html',context=context)
+def SignUp(request):
+    form = forms.signupPage()
+    context = {'form': form, }
+    return render(request, 'signup.html', context=context)
 
 
 # Creating the user after verification starts/////////////////////////////////////////////
 def checkUser(email):
     print("check_user")
-    allusers=db.collection("AllUsers").document('allusers').get().to_dict()['allusers']
+    allusers = db.collection("AllUsers").document(
+        'allusers').get().to_dict()['allusers']
     if email not in allusers:
         return False
     return True
 
+
 def check_user_api(request):
     print("check_user_api")
-    email=request.POST['email']
+    email = request.POST['email']
     return HttpResponse(checkUser(email))
 
 
-def makeUserDocInDatabase(username,email):
+def makeUserDocInDatabase(username, email):
     print("makeUserDocInDatabase")
-    allusers=db.collection("AllUsers").document('allusers').get().to_dict()['allusers']
+    allusers = db.collection("AllUsers").document(
+        'allusers').get().to_dict()['allusers']
 
     if email not in allusers:
         print('Username check')
         allusers.append(email)
-        db.collection("AllUsers").document('allusers').set({'allusers':allusers},merge=True)
-        data_to_set={
-            "username":username,
-            "email":email,
+        db.collection("AllUsers").document('allusers').set(
+            {'allusers': allusers}, merge=True)
+        data_to_set = {
+            "username": username,
+            "email": email,
         }
-        db.collection("Profiles").document().set(data_to_set,merge=True)
+        db.collection("Profiles").document().set(data_to_set, merge=True)
         print('Username check return true')
 
 
 def create_user_after_verification(request):
-    email=request.POST['email']
-    username=request.POST['username']
-    password=request.POST['password']
+    email = request.POST['email']
+    username = request.POST['username']
+    password = request.POST['password']
 
-    msg="User Created in the database"
+    msg = "User Created in the database"
 
-    user_exists=checkUser(email)
+    user_exists = checkUser(email)
 
     if user_exists:
-        msg="Email already taken!"
+        msg = "Email already taken!"
     else:
         try:
-            user = authe.create_user_with_email_and_password(email,password)
-            makeUserDocInDatabase(username,email)
+            user = authe.create_user_with_email_and_password(email, password)
+            makeUserDocInDatabase(username, email)
             # request.session['email']=email
             # request.session['username']=username
 
         except Exception as e:
-            msg=json.loads(e.args[1])['error']['message']
+            msg = json.loads(e.args[1])['error']['message']
     return HttpResponse(msg)
 # Creating the user after verification ends\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
 
 
 # OTP Part code starts here//////////////////////////////////////////////
 def generate_otp():
     print("In generate OTP function")
-    otp=random.random()
-    otp=int(otp*1000000)
+    otp = random.random()
+    otp = int(otp*1000000)
     print("Otp:"+str(otp))
 
     return otp
 
 
-
-
-
-def send_mail(otp,user,email):
+def send_mail(otp, user, email):
     sender_email = os.environ.get("SENDER_EMAIL")
     receiver_email = email
     password = os.environ.get("SENDER_PASS")
@@ -168,12 +180,12 @@ def send_mail(otp,user,email):
 
 
 def send_otp(request):
-    email=request.POST['email']
-    username=request.POST['username']
-    
-    otp=generate_otp()
+    email = request.POST['email']
+    username = request.POST['username']
+
+    otp = generate_otp()
     # mail code here
-    send_mail(otp,username,email)
+    send_mail(otp, username, email)
     return HttpResponse(otp)
 
 # OTP Part code ends here\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
