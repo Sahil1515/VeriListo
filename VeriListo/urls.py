@@ -22,13 +22,13 @@ urlpatterns = [
 
 
     path("", include("Tasks.urls")),
-    path("", include("Signup.urls")),
-    path("", include("Login.urls")),
-    path("", include("password_reset.urls")),
-    path("", include("habits.urls")),
-    path("", include("analytics.urls")),
-    path("", include("contact.urls")),
-    path("", include("about.urls")),
-    path("", include("keeprecord.urls")),
+    path("signup/", include("Signup.urls")),
+    path("login/", include("Login.urls")),
+    path("password_reset/", include("password_reset.urls")),
+    path("habits/", include("habits.urls")),
+    path("analytics/", include("analytics.urls")),
+    path("contact/", include("contact.urls")),
+    path("about/", include("about.urls")),
+    path("keeprecord/", include("keeprecord.urls")),
 
 ]

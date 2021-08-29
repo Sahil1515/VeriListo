@@ -29,6 +29,33 @@
     <script>
         $('document').ready(function() {
 
+            var completed_habits = $('#completed_habits_hidden_values').val()
+            completed_habits = completed_habits.replace(/'/g, '"')
+            completed_habits = completed_habits.replace("True", 'true')
+            completed_habits = JSON.parse(completed_habits)
+            console.log(completed_habits)
+
+
+            var days_data = $('#days_data_hidden_values').val()
+            days_data = days_data.replace(/'/g, '"'); // here the problem was because of single quotes
+            days_data = JSON.parse(days_data)
+            console.log(days_data)
+
+            console.log(typeof parseInt(days_data['Monday']))
+
+            var Monday = parseInt(days_data['Monday'])
+            var Tuesday = parseInt(days_data['Tuesday'])
+            var Wednesday = parseInt(days_data['Wednesday'])
+            var Thursday = parseInt(days_data['Thursday'])
+            var Friday = parseInt(days_data['Friday'])
+            var Saturday = parseInt(days_data['Saturday'])
+            var Sunday = parseInt(days_data['Sunday'])
+
+
+
+
+
+
             var chart1 = new CanvasJS.Chart("chartContainer1", {
                 animationEnabled: true,
                 theme: "dark1", // "light1", "light2", "dark1", "dark2"
@@ -47,25 +74,25 @@
                     type: "column",
                     dataPoints: [{
                         label: "Sunday",
-                        y: 7
+                        y: Sunday
                     }, {
                         label: "Monday",
-                        y: 5
+                        y: Monday
                     }, {
                         label: "Tuesday",
-                        y: 5
+                        y: Thursday
                     }, {
                         label: "Wednesday",
-                        y: 6
+                        y: Wednesday
                     }, {
                         label: "Thursday",
-                        y: 7
+                        y: Thursday
                     }, {
                         label: "Friday",
-                        y: 9
+                        y: Friday
                     }, {
                         label: "Saturday",
-                        y: 6
+                        y: Saturday
                     }]
                 }],
                 backgroundColor: "#ffffff00"
@@ -89,25 +116,25 @@
                     type: "column",
                     dataPoints: [{
                         label: "Sunday",
-                        y: 7
+                        y: Sunday
                     }, {
                         label: "Monday",
-                        y: 5
+                        y: Monday
                     }, {
                         label: "Tuesday",
-                        y: 5
+                        y: Tuesday
                     }, {
                         label: "Wednesday",
-                        y: 6
+                        y: Wednesday
                     }, {
                         label: "Thursday",
-                        y: 7
+                        y: Thursday
                     }, {
                         label: "Friday",
-                        y: 9
+                        y: Friday
                     }, {
                         label: "Saturday",
-                        y: 6
+                        y: Saturday
                     }]
                 }],
                 backgroundColor: "#ffffff00"
@@ -155,6 +182,8 @@
         </div>
     </div>
 
+    <div style="margin-top: 2%;"></div>
+
     <div class="container">
         <div class="justify-content-center">
             <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
@@ -167,7 +196,7 @@
 <div id="habits" class="text-light" style="display:none">
 
     <div class="container">
-        <h1 id="total_habit_tag">Total habits built:3</h1>
+        <h1 id="total_habit_tag">Total habits built: <span class="text-success"> {{ completed_habits_length }}</span> </h1>
         <ul>
             {% for ele in completed_habits %}
             <li class="text-success li-item">{{ ele.habit_name }}</li>
@@ -179,7 +208,10 @@
 </div>
 
 
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<textarea name="completed_habits_hidden_values" id="completed_habits_hidden_values" cols="30" rows="10" hidden>{{ completed_habits }} </textarea>
+<textarea name="days_data_hidden_values" id="days_data_hidden_values" cols="30" rows="10" hidden>{{ days_data }} </textarea>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js "></script>
 
 
 {% endblock %}

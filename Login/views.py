@@ -10,7 +10,6 @@ import environ
 import os
 # Initialise environment variables
 
-
 # Firestore
 import firebase_admin
 from firebase_admin import credentials
@@ -35,7 +34,6 @@ if not firebase_admin._apps:
 db = firestore.client()
 
 
-
 # Make .env file available globally
 env_path = os.path.join(os.path.dirname(__file__), '../.env')
 environ.Env.read_env(env_path)
@@ -52,8 +50,6 @@ firebaseConfig = {
     "measurementId": os.environ.get("MEASUREMENTID"),
     "databaseURL": os.environ.get("DATABASEURL")
 }
-
-
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 authe = firebase.auth()

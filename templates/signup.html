@@ -49,62 +49,63 @@
                 if (email == "" || username == "" || password == "")
                     alert("All fields are required!")
 
-                console.log("Signup_btn clicked")
+                // added without check
+                else {
+                    //checking if the user is already in the database
+                    $.post('check_user_api', {
+                            "email": email,
+                            "csrfmiddlewaretoken": "{{csrf_token}}"
+                        },
+                        function(data, status) {
+                            // alert(data)
+                            if (status == "success") {
 
-                //checking if the user is already in the database
-                $.post('/check_user_api', {
-                        "email": email,
-                        "csrfmiddlewaretoken": "{{csrf_token}}"
-                    },
-                    function(data, status) {
-                        alert(data)
-                        if (status == "success") {
+                                // If the user is already there i.e if returned true
+                                if (data == 'True') {
+                                    //set the msg user is already there
+                                    $('#user_exists_msg').show()
 
-                            // If the user is already there i.e if returned true
-                            if (data == 'True') {
-                                //set the msg user is already there
-                                $('#user_exists_msg').show()
+                                } else {
 
-                            } else {
+                                    // alert("above send otp")
+                                    $.post('send_otp', {
+                                            "email": email,
+                                            "username": username,
+                                            "csrfmiddlewaretoken": "{{csrf_token}}"
+                                        },
+                                        function(data, status) {
+                                            if (status == "success") {
+                                                otp_original = data;
+                                                // alert("In send otp")
 
-                                alert("above send otp")
-                                $.post('/send_otp', {
-                                        "email": email,
-                                        "username": username,
-                                        "csrfmiddlewaretoken": "{{csrf_token}}"
-                                    },
-                                    function(data, status) {
-                                        if (status == "success") {
-                                            otp_original = data;
-                                            alert("In send otp")
+                                                // This is only done when otp is sent
+                                                $('#parent').css('display', 'none')
+                                                $('#otp_div').css('display', 'block')
+                                                $('#top_text_signup').css('display', 'none')
+                                                $('#top_text_otp').css('display', 'block')
 
-                                            // This is only done when otp is sent
-                                            $('#parent').css('display', 'none')
-                                            $('#otp_div').css('display', 'block')
-                                            $('#top_text_signup').css('display', 'none')
-                                            $('#top_text_otp').css('display', 'block')
+                                                $('#email_span').html('<b>' + email + '</b>')
 
-                                            $('#email_span').html('<b>' + email + '</b>')
-
+                                            }
                                         }
-                                    }
-                                );
+                                    );
+                                }
                             }
                         }
-                    }
-                );
+                    );
+                }
             })
 
 
             $('#btn_validate').click(function() {
                 var user_otp = $('#otp').val()
-                alert(otp_original)
-                alert(user_otp)
-                alert(user_otp == otp_original)
+                    // alert(otp_original)
+                    // alert(user_otp)
+                    // alert(user_otp == otp_original)
 
                 if (user_otp == otp_original) {
 
-                    $.post('/create_user_after_verification', {
+                    $.post('create_user_after_verification', {
                             'email': email,
                             'username': username,
                             'password': password,
@@ -139,11 +140,11 @@
 
 <body>
 
-    <div class="fluid" id="top_text_signup" style="display: block;"> Signup for <span class="text-primary" style="font-size: 50px; ">Memory
-            Friend</span> </div>
+    <div class="fluid" id="top_text_signup" style="display: block;"> Signup for <span class="text-primary" style="font-size: 50px; ">
+            VeriListo</span> </div>
 
-    <div class="fluid" id="top_text_otp" style="display: none;">OTP for <span class="text-primary" style="font-size: 50px; ">Memory
-            Friend</span> </div>
+    <div class="fluid" id="top_text_otp" style="display: none;">OTP for <span class="text-primary" style="font-size: 50px; ">
+        VeriListo</span> </div>
 
 
     <div id="otp_div" style="display: none;" class="text-light">
@@ -190,8 +191,8 @@
 
         <br>
 
-        <a href="login" class="text-light">Already have an account?</a>
-        <button onclick="location.href='login' " style="float: right;  margin: 10px;" type="submit" class="btn btn-primary" id="login_btn">Login</button>
+        <a href="/login" class="text-light">Already have an account?</a>
+        <button onclick="location.href='/login' " style="float: right;  margin: 10px;" type="submit" class="btn btn-primary" id="login_btn">Login</button>
 
     </div>
 

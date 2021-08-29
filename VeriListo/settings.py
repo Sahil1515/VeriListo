@@ -11,22 +11,20 @@ import schedule
 
 # sys.path.insert(1, 'VeriListo')
 from habits.views import enable_button
-
-
-# Initialise environment variables
-# env = environ.Env()
-# environ.Env.read_env()
+# from Tasks.views import delete_task_and_add_store_datewise
 
 # Make .env file available globally
 env_path = os.path.join(os.path.dirname(__file__), '../.env')
 environ.Env.read_env(env_path)
 
 
+
+
 # ///////////////////////////////SCHEDULE THE ENABLE BUTTON STARTS////////////////////
 
-# Schedule the task at 16:47 everyday
-schedule.every().day.at("17:16").do(enable_button)
-
+# Schedule the task at 00:01 everyday
+schedule.every().day.at("00:01").do(enable_button)
+# schedule.every().day.at("01:00").do(delete_task_and_add_store_datewise)
 
 def func():
     while True:
@@ -39,6 +37,8 @@ t1 = threading.Thread(target=func)
 t1.start()
 
 # ///////////////////////////////SCHEDULE THE ENABLE BUTTON ENDS////////////////////
+
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

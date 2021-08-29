@@ -145,7 +145,7 @@ def send_mail(otp, user, email):
     password = os.environ.get("SENDER_PASS")
 
     message = MIMEMultipart("alternative")
-    message["Subject"] = "Memory Friend Verification Code"
+    message["Subject"] = "VeriListo Verification Code"
     message["From"] = sender_email
     message["To"] = receiver_email
 
@@ -160,7 +160,7 @@ def send_mail(otp, user, email):
         <h2 style="padding-left: 20%;">{2}</h2>
         <p>Don't share it with anyone.</p>
         <p>Regards,</p>
-        Memory Friend
+        VeriListo
     </body>
 
     </html>

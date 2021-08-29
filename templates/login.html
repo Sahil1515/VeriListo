@@ -31,7 +31,7 @@
                 var email = $('#id_email').val();
                 var password = $('#id_password').val();
 
-                $.post('/login_api', {
+                $.post('login_api', {
                         "email": email,
                         "password": password,
                         "csrfmiddlewaretoken": "{{csrf_token}}"
@@ -86,9 +86,9 @@
         <!-- </form> -->
 
         <br>
-        <a href="signup" class="text-light">Don't have an account?</a>
+        <a href="/signup" class="text-light">Don't have an account?</a>
         <br>
-        <a href="password_reset" class="text-light">Forgot password?</a>
+        <a href="/password_reset" class="text-light">Forgot password?</a>
     </div>
 
 
