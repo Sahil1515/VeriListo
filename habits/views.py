@@ -16,6 +16,9 @@ db = firestore.client()
 
 # //////////////////////////////////// SCHEDULER////////////////////////////////////
 
+
+# This  function is called from the setting.py file where the scheduler is run using thread. 
+# This function will enable all the 'Mark as done' buttons on the habits bage
 def enable_button():
     print("Hello")
     HabitscollRef = db.collection("Habits").stream()
@@ -30,19 +33,21 @@ def enable_button():
         db.collection("Habits").document(
             habitDoc.id).set(habit_doc_data, merge=True)
 
-
 # ///////////////////////////////////////////////////////////////////////////////////////////
 
+
+# This takes the email and returns the doc_id(or say profile id of person from firestore database), from the profile collection
 def getDocId(request):
+    doc_id=None
     email = request.session["email"]
     docs_ref = db.collection("Profiles").where("email", "==", email).get()
     if docs_ref is not None:
         for doc in docs_ref:
             doc_id = doc.id
-        return doc_id
+    return doc_id
 
 
-# Returns all the habits of a person he has added currently
+# Returns all the habits of a person he has added
 def get_all_habits(doc_id):
     doc_ref = db.collection("Habits").document(doc_id).get()
     habits_data = doc_ref.to_dict()  # All habits
@@ -100,10 +105,15 @@ def habits(request):
     return render(request, "habits.html", context={"habits_data_items": habits_data_items})
 
 
+
+
+# This function is called when the new habit is added.
 def habits_ajax(request):
+    # Getting the doc_id of user by email
     doc_id = getDocId(request)
     habits_data_items = []
 
+    # Getting all habits
     habits_data = get_all_habits(doc_id)
     if habits_data is None:
         habits_data = {}
@@ -112,8 +122,11 @@ def habits_ajax(request):
         habits_data_items = habits_data["items"]
 
     if request.method == "POST":
+        # Getting the name of the requested habit/added habit
         habit_name = request.POST.get("habit_name")
         print(habit_name)
+
+        # making data to be added to the database
         data = {
             "habit_name": habit_name,
             "days_completed": 0,
@@ -129,8 +142,8 @@ def habits_ajax(request):
         except:
             pass
 
+        # If the added habit is not empty or not the lastr added one and not already there only then add 
         if habit_name not in ("", last_added_habit) and habit_name not in habit_name_list:
-
             request.session["last_added_habit"] = habit_name
 
             habits_data_items.append(data)
@@ -138,6 +151,7 @@ def habits_ajax(request):
                 habits_data["total_habits"] = 1
             else:
                 print(habits_data)
+                # Increment the count after every habit is added
                 habits_data["total_habits"] = habits_data["total_habits"]+1
             habits_data["items"] = habits_data_items
             print(doc_id)
@@ -151,23 +165,33 @@ def habits_ajax(request):
     return JsonResponse(context)
 
 
+
+# This api is called when the user clicks on 'Mark as done button' in habits page.
 def habit_days_completed_inc(request):
     print("\n\nhabit_days_completed")
+    # Getting the doc_id of the loggedin user
     doc_id = getDocId(request)
+
+    # Collecting the data of habit for which the button is pressed
     habit_name = request.POST["habit_name"]
     habits_data = get_all_habits(doc_id)
     habits_data_items = habits_data["items"]
     print(habits_data_items)
-    # print(habits_data["total_habits"])
 
+    # Getting the total number of habits he/she has added from database
     total_habits = habits_data["total_habits"]
     new_data = []
 
+    # If some of the habits are already completed
     if "completed_habits" in habits_data.keys():
         completed_habits = habits_data["completed_habits"]
     else:
         completed_habits = []
 
+    # Getting the particular habit from the array of all habits and then checking if the completed days
+    # for this habit are equal to 25. If equal to 25 then move to completed habits and remove from the to be completed habits and decrement the total habits.
+    # And increment the total_completed_habits.
+    # Then push the data to the database 
     for i in range(0, total_habits):
         if habits_data_items[i]["habit_name"] == habit_name:
             habits_data["items"][i]["days_completed"] = habits_data["items"][i]["days_completed"]+1
@@ -190,21 +214,4 @@ def habit_days_completed_inc(request):
 
     db.collection("Habits").document(doc_id).set(habits_data, merge=True)
 
-    # print("============Hello=====================")
     return render(request, "habits.html", context={"habits_data_items": habits_data_items})
-
-
-# executor = concurrent.futures.ThreadPoolExecutor()
-
-# def habit_days_completed_inc(request):
-#     """
-#     This function increments the days completed of the habit
-#     """
-
-#     return_val=None
-
-#     future=executor.submit(habit_days_completed_inc_util,request)
-#     return_val=future.result()
-#     print(return_val)
-
-#     return return_val

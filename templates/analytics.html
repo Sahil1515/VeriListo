@@ -155,61 +155,65 @@
 
 {% block content %}
 
-<div class="container p-md-5">
-    <div class="row justify-content-center align-items-center" id="toggle-btns">
-        <div class="col-6">
-            <button type="button" class="btn btn-success btn-md btn-block" onclick="return show('tasks','habits');">Tasks</button>
-        </div>
-        <div class="col-6">
-            <button type="button" class="btn btn-secondary btn-md btn-block" onclick="return show('habits','tasks');">Habits</button>
+<div style="min-height: 900px;">
+
+    <div class="container p-md-5">
+        <div class="row justify-content-center align-items-center" id="toggle-btns">
+            <div class="col-6">
+                <button type="button" class="btn btn-success btn-md btn-block" onclick="return show('tasks','habits');">Tasks</button>
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-secondary btn-md btn-block" onclick="return show('habits','tasks');">Habits</button>
+            </div>
         </div>
     </div>
+
+
+
+    <div id="tasks">
+
+        <div class="container justify-content-center head-text-class" style="padding-bottom:20px;">
+            <h1 class="text-light head-text">Total tasks added: <span class="text-success">13</span></h1>
+            <h1 class="text-light head-text">Total tasks added: <span class="text-success">11</span></h1>
+        </div>
+
+
+        <div class="container">
+            <div class="justify-content-center">
+                <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 2%;"></div>
+
+        <div class="container">
+            <div class="justify-content-center">
+                <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="habits" class="text-light" style="display:none">
+
+        <div class="container">
+            <h1 id="total_habit_tag">Total habits built: <span class="text-success"> {{ completed_habits_length }}</span> </h1>
+            <ul>
+                {% for ele in completed_habits %}
+                <li class="text-success li-item">{{ ele.habit_name }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+    </div>
+    <textarea name="completed_habits_hidden_values" id="completed_habits_hidden_values" cols="30" rows="10" hidden>{{ completed_habits }} </textarea>
+    <textarea name="days_data_hidden_values" id="days_data_hidden_values" cols="30" rows="10" hidden>{{ days_data }} </textarea>
+
 </div>
 
 
-
-<div id="tasks">
-
-    <div class="container justify-content-center head-text-class" style="padding-bottom:20px;">
-        <h1 class="text-light head-text">Total tasks added: <span class="text-success">13</span></h1>
-        <h1 class="text-light head-text">Total tasks added: <span class="text-success">11</span></h1>
-    </div>
-
-
-    <div class="container">
-        <div class="justify-content-center">
-            <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
-        </div>
-    </div>
-
-    <div style="margin-top: 2%;"></div>
-
-    <div class="container">
-        <div class="justify-content-center">
-            <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
-        </div>
-    </div>
-
-</div>
-
-
-<div id="habits" class="text-light" style="display:none">
-
-    <div class="container">
-        <h1 id="total_habit_tag">Total habits built: <span class="text-success"> {{ completed_habits_length }}</span> </h1>
-        <ul>
-            {% for ele in completed_habits %}
-            <li class="text-success li-item">{{ ele.habit_name }}</li>
-            {% endfor %}
-        </ul>
-
-    </div>
-
-</div>
-
-
-<textarea name="completed_habits_hidden_values" id="completed_habits_hidden_values" cols="30" rows="10" hidden>{{ completed_habits }} </textarea>
-<textarea name="days_data_hidden_values" id="days_data_hidden_values" cols="30" rows="10" hidden>{{ days_data }} </textarea>
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js "></script>
 

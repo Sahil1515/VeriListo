@@ -30,5 +30,6 @@ urlpatterns = [
     path("contact/", include("contact.urls")),
     path("about/", include("about.urls")),
     path("keeprecord/", include("keeprecord.urls")),
+    path("logout/", include("logout.urls")),
 
 ]

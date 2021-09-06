@@ -23,7 +23,7 @@ environ.Env.read_env(env_path)
 # ///////////////////////////////SCHEDULE THE ENABLE BUTTON STARTS////////////////////
 
 # Schedule the task at 00:01 everyday
-schedule.every().day.at("00:01").do(enable_button)
+schedule.every().day.at("13:25").do(enable_button)
 # schedule.every().day.at("01:00").do(delete_task_and_add_store_datewise)
 
 def func():

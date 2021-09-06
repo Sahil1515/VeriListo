@@ -19,27 +19,30 @@
     <script>
         $(document).ready(function() {
 
-            jQuery.fn.single_double_click = function(single_click_callback, double_click_callback, timeout) {
-                return this.each(function() {
-                    var clicks = 0,
-                        self = this;
-                    jQuery(this).click(function(event) {
-                        clicks++;
-                        if (clicks == 1) {
-                            setTimeout(function() {
-                                if (clicks == 1) {
-                                    single_click_callback.call(self, event);
-                                } else {
-                                    double_click_callback.call(self, event);
-                                }
-                                clicks = 0;
-                            }, timeout || 300);
-                        }
+            // Stack Overflow
+            jQuery.fn.single_double_click =
+                function(single_click_callback, double_click_callback, timeout) {
+                    return this.each(function() {
+                        var clicks = 0,
+                            self = this;
+                        jQuery(this).click(function(event) {
+                            clicks++;
+                            if (clicks == 1) {
+                                setTimeout(function() {
+                                    if (clicks == 1) {
+                                        single_click_callback.call(self, event);
+                                    } else {
+                                        double_click_callback.call(self, event);
+                                    }
+                                    clicks = 0;
+                                }, timeout || 300);
+                            }
+                        });
                     });
-                });
-            }
+                }
 
             $(".li_item").single_double_click(
+
                 function() {
 
                     var class_name = "unchecked";
@@ -47,7 +50,7 @@
 
                     var class_get = $(this).attr('class');
 
-                    if (class_get.includes('unchecked')) {
+                    if (class_get.includes('unchecked') == true) {
                         class_name = "checked";
                     } else {
                         class_name = "unchecked";
@@ -78,6 +81,7 @@
                         $(this).addClass("unchecked");
                     }
                 },
+
                 function() {
                     var val_ele = $(this).html()
 
@@ -97,7 +101,9 @@
                         }
 
                     )
-                })
+                }
+
+            )
         });
     </script>
 
@@ -122,7 +128,7 @@
             <ul id="myUL" style="width: 100%;">
                 {%for ele in data%}
                 <div class="col-12 justify-content-center  align-content-center">
-                    <li id="li_items" class="cross li_item {{ele.class_name}}"> {{ ele.tag }}</li>
+                    <li id="li_items" class="cross li_item {{ ele.class_name }}"> {{ ele.tag }}</li>
                 </div>
                 {%endfor%}
             </ul>
